@@ -1,6 +1,6 @@
 :root {
   --bg: #0e2f44;            /* page background (packing) */
-  --panel: #468499;         /* dark panels that hold each section */
+  --panel: #0e2f44;         /* 468499 dark panels that hold each section */
   --field: #163e58;         /* inputs, slightly lighter than the panel */
   --accent: #beb957;
   --accent-text: #0e2f44;
