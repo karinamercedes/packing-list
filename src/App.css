@@ -62,8 +62,8 @@ h3 { margin: 40px 0 14px; font-size: 1.3rem; color: var(--muted); }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 20px; }
 .grid > * { grid-column: 1 / -1; }
 
-/* ...except days + start date, which share one line. */
-.grid > label:has(input[name="days"]),
+/* ...except date + start date, which share one line. */
+.grid > label:has(input[name="date"]),
 .grid > label:has(input[name="startDate"]) { grid-column: auto; }
 
 label {
