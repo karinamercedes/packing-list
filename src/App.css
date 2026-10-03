@@ -63,7 +63,7 @@ h3 { margin: 40px 0 14px; font-size: 1.3rem; color: var(--muted); }
 .grid > * { grid-column: 1 / -1; }
 
 /* ...except days + start date, which share one line. */
-.grid > label:has(input[name="days"]),
+.grid > label:has(input[name="numDays"]),
 .grid > label:has(input[name="startDate"]) { grid-column: auto; }
 
 label {
