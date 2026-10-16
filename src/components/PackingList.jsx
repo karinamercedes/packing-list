@@ -1,8 +1,10 @@
 // Every quantity below starts out as the suggested amount the rules engine
 // calculated (item.qty), shown in the accent colour until it's changed --
 // qtyOverrides only ever holds the ids someone has actually touched.
+// Capped at 10 -- but never below the suggested amount itself, so a long
+// trip's own suggestion (e.g. 14 pairs of underwear) still stays selectable.
 function qtyOptions(suggested) {
-  const max = Math.max(20, suggested + 10)
+  const max = Math.max(10, suggested)
   return Array.from({ length: max + 1 }, (_, i) => i)
 }
 
@@ -29,7 +31,7 @@ export default function PackingList({ result, checked, onToggle, qtyOverrides, o
 
   return (
     <section className="section">
-      <h2>Your packing list</h2>
+      <h2 className="list-heading">Your packing list</h2>
       <p className="muted">{done} / {total} packed</p>
 
       {result.warnings.length > 0 && (

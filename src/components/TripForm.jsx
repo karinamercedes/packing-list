@@ -1,4 +1,5 @@
 import { ACTIVITIES } from '../utils/rules'
+import CitySearch from './CitySearch'
 
 export default function TripForm({ trip, onChange }) {
   function handleChange(e) {
@@ -20,10 +21,7 @@ export default function TripForm({ trip, onChange }) {
   return (
     <section>
       <div className="grid trip-grid">
-        <label>
-          City
-          <input name="city" value={trip.city} onChange={handleChange} placeholder="e.g. Lisbon" />
-        </label>
+        <CitySearch value={trip.city} onChange={(city) => onChange({ ...trip, city })} />
         <label>
           Days
           <input name="numDays" type="number" min="1" max="30" value={trip.numDays} onChange={handleChange} />

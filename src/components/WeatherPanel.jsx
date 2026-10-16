@@ -50,7 +50,7 @@ export default function WeatherPanel({ trip, onWeather }) {
 
   return (
     <section className="section weather-section no-print">
-      <h2>Weather</h2>
+      <h2 className="list-heading">Weather</h2>
 
       {status === 'idle' && !forecast && (
         <p className="muted">Enter a city and a start date to see the weather for your trip.</p>

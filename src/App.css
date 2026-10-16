@@ -64,6 +64,22 @@ label { display: flex; flex-direction: column; gap: 4px; font-size: 0.92rem; fon
   .trip-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* City suggestions -- ported from travel-planner's own CitySearch. The
+   list floats above the layout instead of pushing the row taller. */
+.search { margin-bottom: 14px; }
+.search > label { font-size: 0.85rem; font-weight: 600; color: var(--muted); display: block; margin-bottom: 4px; }
+.results { list-style: none; padding: 0; margin: 8px 0 0; }
+.results button { width: 100%; text-align: left; display: flex; flex-direction: column; margin-bottom: 6px; background: var(--field); }
+.city-search { position: relative; margin-bottom: 0; }
+.city-search .results {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 2;
+  background: var(--field); border: 1px solid var(--line); border-radius: 8px;
+  padding: 6px; margin-top: 4px; box-shadow: 0 8px 20px rgba(5, 63, 111, 0.12);
+}
+.city-search .results button { margin-bottom: 0; padding: 6px 8px; border: none; }
+.city-search > .muted { position: absolute; top: 100%; margin-top: 4px; }
+.city-search .results .muted { font-size: 0.8rem; }
+
 input, select {
   font: inherit; padding: 10px 12px; border: 2px solid var(--text); border-radius: 8px;
   background: var(--field); color: var(--text); width: 100%; min-width: 0;
@@ -131,6 +147,11 @@ a.full-width, a.primary { text-decoration: none; }
    uses for its own "Plan a new journey"), sitting between the weather
    section and the packing list itself. */
 .reset-row { text-align: center; margin: var(--space) 0; }
+@media (min-width: 1025px) {
+  /* Tightened on laptop: 25px off the gap above (to the weather cards),
+     15px off the gap below (to "Your packing list"). */
+  .reset-row { margin-top: 75px; margin-bottom: 85px; }
+}
 
 /* ---------- Hero (section 1) ---------- */
 .hero { position: relative; z-index: 0; width: 100vw; margin-left: calc(50% - 50vw); min-height: 90vh; display: flex; }
@@ -161,6 +182,13 @@ a.full-width, a.primary { text-decoration: none; }
 @media (min-width: 1025px) {
   .hero h1 { font-size: 9.6rem; }
   .hero .subhead { font-size: 1.2em; }
+  /* hero-copy normally shrinks to fit its widest child (the subhead), so
+     the CTA below it (112.5% of that width) ends up shorter here than on
+     travel-planner purely because packing-list's subhead copy is shorter
+     text -- not a deliberate size difference. Fixing hero-copy's own
+     width to travel-planner's rendered value (764px at this breakpoint)
+     keeps the CTA the same length on both, regardless of copy length. */
+  .hero-copy { width: 764px; }
   .hero .secondary { width: 112.5%; }
 }
 
@@ -185,10 +213,14 @@ a.full-width, a.primary { text-decoration: none; }
 .section-heading .subhead { font-size: 1.2rem; margin: 20px 0 0; width: 100%; text-align: right; align-self: flex-end; }
 @media (min-width: 760px) { .section-heading .subhead { width: 48%; } }
 
-.plan-section {
-  position: relative; z-index: 1; min-height: 100vh;
-  display: flex; flex-direction: column; justify-content: center;
-}
+/* No min-height:100vh/centering here (unlike travel-planner's own
+   plan-section) -- packing-list's form is much shorter (3 fields, no
+   place-adding list), so centering it in a full viewport-height box
+   leaves a large, viewport- and content-dependent gap above the heading
+   and below the activity chips instead of a fixed, predictable one. Sized
+   to its own content, with fixed padding below for a consistent gap. */
+.plan-section { position: relative; z-index: 1; }
+@media (min-width: 1025px) { .plan-section { padding-top: 30px; } }
 
 /* ---------- Film strip (same as travel-planner, color-neutral) ---------- */
 .film-strip { overflow: hidden; }
@@ -266,10 +298,11 @@ a.full-width, a.primary { text-decoration: none; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23053f6f' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 10px center; background-size: 10px 6px;
 }
-/* Still at the suggested amount: shown in the accent colour so it reads as
-   a suggestion rather than a locked-in number. Reverts to the normal text
-   colour the moment it's changed to anything else. */
-.qty-select.qty-suggested { color: var(--accent); border-color: var(--accent); font-weight: 600; }
+/* Still at the suggested amount: the number itself reads in the accent
+   colour so it reads as a suggestion rather than a locked-in number, but
+   the stroke around the field always stays navy -- only the digit changes
+   colour. Reverts to the normal text colour the moment it's changed. */
+.qty-select.qty-suggested { color: var(--accent); font-weight: 600; }
 
 /* ---------- Weather ---------- */
 .weather-summary { margin-bottom: 28px; }
@@ -292,7 +325,7 @@ a.full-width, a.primary { text-decoration: none; }
 .weather-weekday { font-weight: 600; font-size: 0.95rem; line-height: 1.3; color: var(--text); }
 .weather-date { color: var(--muted); font-size: 0.85rem; line-height: 1.3; }
 .weather-icon { width: 52px; height: 52px; margin: 10px 0 6px; }
-.weather-temp { font-size: 1.25rem; font-weight: 600; line-height: 1.3; color: var(--text); }
+.weather-temp { font-size: 1.25rem; font-weight: 600; line-height: 1.3; color: var(--accent); }
 .weather-temp-min { color: var(--muted); font-size: 0.95rem; font-weight: 400; }
 .weather-label { color: var(--muted); font-size: 0.85rem; line-height: 1.3; }
 .weather-note { margin-top: 28px; font-size: 0.9rem; }
@@ -341,18 +374,11 @@ a.full-width, a.primary { text-decoration: none; }
   .hero, .hero-inner { min-height: auto; }
   .hero-inner { padding-bottom: 100px; }
 
-  /* Same fix as the hero above: min-height:100vh with vertical centering
-     leaves a viewport-dependent gap both above and below the section's
-     actual content on short mobile screens, instead of the fixed, even
-     gap a fixed padding gives. Letting the section size to its own
-     content shrinks the previously oversized gap below the activity
-     chips down to what the following section's own spacing naturally
-     gives it, and keeps the gap above "Everything you need..." matching
-     the hero's own 100px gap to the carousel (the carousel's 22px
-     margin-bottom and this section's 22px margin-top collapse into one
-     22px gap, per normal CSS sibling-margin collapsing, plus 78px here
-     = 100px). */
-  .plan-section { min-height: auto; justify-content: flex-start; padding-top: 78px; }
+  /* Matches the hero's own 100px gap to the carousel (the carousel's
+     22px margin-bottom and this section's 22px margin-top collapse into
+     one 22px gap, per normal CSS sibling-margin collapsing, plus 78px
+     here = 100px). */
+  .plan-section { padding-top: 78px; }
   .gradient-blob { background-size: 140vw 134vh; background-position: 10vw 25vh; }
 
   .fixes.fixes-fill { grid-template-columns: 1fr; }
