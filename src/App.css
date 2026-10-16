@@ -340,7 +340,19 @@ a.full-width, a.primary { text-decoration: none; }
   .hero .eyebrow { margin: 25px 0 90px 0; }
   .hero, .hero-inner { min-height: auto; }
   .hero-inner { padding-bottom: 100px; }
-  .plan-section { padding-top: 78px; }
+
+  /* Same fix as the hero above: min-height:100vh with vertical centering
+     leaves a viewport-dependent gap both above and below the section's
+     actual content on short mobile screens, instead of the fixed, even
+     gap a fixed padding gives. Letting the section size to its own
+     content shrinks the previously oversized gap below the activity
+     chips down to what the following section's own spacing naturally
+     gives it, and keeps the gap above "Everything you need..." matching
+     the hero's own 100px gap to the carousel (the carousel's 22px
+     margin-bottom and this section's 22px margin-top collapse into one
+     22px gap, per normal CSS sibling-margin collapsing, plus 78px here
+     = 100px). */
+  .plan-section { min-height: auto; justify-content: flex-start; padding-top: 78px; }
   .gradient-blob { background-size: 140vw 134vh; background-position: 10vw 25vh; }
 
   .fixes.fixes-fill { grid-template-columns: 1fr; }
@@ -357,6 +369,16 @@ a.full-width, a.primary { text-decoration: none; }
 
   /* Subhead sits a bit further from its heading, matching travel-planner. */
   .section-heading .subhead { margin-top: 30px; }
+
+  /* Reset sat too far from both the weather cards above it and "Your
+     packing list" below -- half the usual var(--space) gap on both
+     sides. */
+  .reset-row { margin: var(--space-half) 0; }
+
+  /* The opposite problem just above "Download your list": not enough
+     room between it and the packing list above. Adds roughly 25px over
+     the .section base's own 22px margin-top + 5px padding-top. */
+  .download-section { margin-top: 47px; }
 
   .muted { font-size: 0.8rem; }
 

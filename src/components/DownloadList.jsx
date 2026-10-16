@@ -7,7 +7,7 @@ export default function DownloadList({ trip, result, checked, qtyOverrides }) {
   const name = slug(trip.city)
 
   return (
-    <section className="section">
+    <section className="section download-section">
       <div className="section-heading">
         <h2>Download your list</h2>
         <p className="subhead">

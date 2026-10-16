@@ -5,7 +5,7 @@ export default function Hero() {
     <section className="hero" id="top">
       <div className="gradient-blob" aria-hidden="true" />
       <div className="hero-inner">
-        <p className="eyebrow">Pack Smart</p>
+        <p className="eyebrow">Plan Smart</p>
         <div className="hero-group">
           <h1>Packing<br />List</h1>
           <div className="hero-copy">

@@ -50,7 +50,7 @@ export default function App() {
           <div className="section-heading">
             <h2>Everything you need for your journey</h2>
             <p className="subhead">
-              Tell us where you're going and what the trip is for -- we'll work out everything you need to take with you.
+              Tell us where you're going and what the trip is for — we'll work out everything you need to take with you.
             </p>
           </div>
 
