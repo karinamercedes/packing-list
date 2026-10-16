@@ -6,6 +6,21 @@ function qtyOptions(suggested) {
   return Array.from({ length: max + 1 }, (_, i) => i)
 }
 
+// Each warning reads as "<condition> -- <what to pack>." (an em dash, not a
+// double hyphen, for a single unbroken stroke). The condition half stays
+// navy body text; the dash and the instruction after it pick up the accent
+// colour, so the call to action stands out.
+function WarningLine({ text }) {
+  const dashIndex = text.indexOf('—')
+  if (dashIndex === -1) return <p>{text}</p>
+  return (
+    <p>
+      {text.slice(0, dashIndex)}
+      <span style={{ color: 'var(--accent)' }}>{text.slice(dashIndex)}</span>
+    </p>
+  )
+}
+
 export default function PackingList({ result, checked, onToggle, qtyOverrides, onSetQty }) {
   if (result.categories.length === 0) return null
 
@@ -19,7 +34,7 @@ export default function PackingList({ result, checked, onToggle, qtyOverrides, o
 
       {result.warnings.length > 0 && (
         <div className="banner tight" role="status">
-          {result.warnings.map((w) => <p key={w}>{w}</p>)}
+          {result.warnings.map((w) => <WarningLine key={w} text={w} />)}
         </div>
       )}
 

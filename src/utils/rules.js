@@ -69,9 +69,9 @@ export const ACTIVITIES = [
 
 // Weather flags: condition -> items to add + a short warning message.
 const WEATHER_RULES = [
-  { test: (w) => w.willRain, items: [{ name: 'Rain jacket', fixed: 1 }, { name: 'Umbrella', fixed: 1 }], warning: 'Rain is forecast -- pack a rain jacket.' },
-  { test: (w) => w.minTemp < 10, items: [{ name: 'Warm jacket', fixed: 1 }, { name: 'Jumper', fixed: 1 }], warning: 'Cold days ahead -- pack warm layers.' },
-  { test: (w) => w.maxTemp > 28, items: [{ name: 'Sun hat', fixed: 1 }], warning: 'Hot weather expected -- pack sun protection.' },
+  { test: (w) => w.willRain, items: [{ name: 'Rain jacket', fixed: 1 }, { name: 'Umbrella', fixed: 1 }], warning: 'Rain is forecast — pack a rain jacket.' },
+  { test: (w) => w.minTemp < 10, items: [{ name: 'Warm jacket', fixed: 1 }, { name: 'Jumper', fixed: 1 }], warning: 'Cold days ahead — pack warm layers.' },
+  { test: (w) => w.maxTemp > 28, items: [{ name: 'Sun hat', fixed: 1 }], warning: 'Hot weather expected — pack sun protection.' },
 ]
 
 const round = (n) => Math.max(1, Math.round(n))

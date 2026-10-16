@@ -72,7 +72,7 @@ export default function WeatherPanel({ trip, onWeather }) {
 
           {forecast.hasTypical && (
             <p className="muted weather-note">
-              Days with a dashed outline are more than two weeks away, so they show what the
+              Days with a muted outline are more than two weeks away, so they show what the
               weather was on the same dates last year. Treat them as a rough guide; the real
               forecast may be different.
             </p>

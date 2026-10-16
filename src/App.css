@@ -230,7 +230,7 @@ a.full-width, a.primary { text-decoration: none; }
 .error { color: var(--danger); font-size: 0.9rem; }
 .banner { margin: 20px 0; font-size: 0.95rem; color: var(--text); }
 .banner p { margin: 6px 0 0; }
-.banner.tight { color: var(--accent); }
+.banner.tight { color: var(--text); }
 .empty { text-align: center; color: var(--muted); margin-top: 16px; }
 
 /* ---------- Packing list ---------- */
@@ -287,7 +287,7 @@ a.full-width, a.primary { text-decoration: none; }
   display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px;
   padding: 18px 8px 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--field);
 }
-.weather-card.typical { border-style: dashed; border-color: var(--muted); }
+.weather-card.typical { border-style: solid; border-color: var(--muted); }
 
 .weather-weekday { font-weight: 600; font-size: 0.95rem; line-height: 1.3; color: var(--text); }
 .weather-date { color: var(--muted); font-size: 0.85rem; line-height: 1.3; }
@@ -344,12 +344,19 @@ a.full-width, a.primary { text-decoration: none; }
   .gradient-blob { background-size: 140vw 134vh; background-position: 10vw 25vh; }
 
   .fixes.fixes-fill { grid-template-columns: 1fr; }
+  .fixes { gap: 10px; }
   .primary, .secondary, input, select { border-width: 1.5px; }
 
   /* Same iOS native date-picker mitigation already proven on travel-planner:
-     own full-width row (handled via .trip-grid's 2-col wrap already putting
-     Start date on its own line at 3 fields), smaller text, half width. */
+     own full-width row, smaller text, then halve the input's own width
+     within that row for extra margin against iOS's native picker chrome
+     rendering wider than the CSS width given. */
+  .trip-grid > label:nth-child(3) { grid-column: 1 / -1; }
   input[name="startDate"] { font-size: 0.85rem; padding-left: 10px; padding-right: 10px; }
+  .trip-grid > label:nth-child(3) input[name="startDate"] { width: 50%; }
+
+  /* Subhead sits a bit further from its heading, matching travel-planner. */
+  .section-heading .subhead { margin-top: 30px; }
 
   .muted { font-size: 0.8rem; }
 
