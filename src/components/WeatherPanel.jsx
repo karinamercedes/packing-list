@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { searchPlaces } from '../utils/geocode'
 import { fetchForecast, describeCode } from '../utils/forecast'
+import { chunkIntoRows } from '../utils/layout'
 
 // Looks up the city's coordinates, then loads a day-by-day forecast for the
 // trip. Runs by itself shortly after the city, start date or number of days
@@ -48,7 +49,7 @@ export default function WeatherPanel({ trip, onWeather }) {
   }, [city, startDate, numDays])
 
   return (
-    <section className="section">
+    <section className="section weather-section no-print">
       <h2>Weather</h2>
 
       {status === 'idle' && !forecast && (
@@ -67,12 +68,42 @@ export default function WeatherPanel({ trip, onWeather }) {
             {forecast.willRain ? ' Rain likely on at least one day.' : ''}
           </p>
 
-          <ul className="weather-days">
-            {forecast.days.map((day) => {
+          <WeatherGrid days={forecast.days} />
+
+          {forecast.hasTypical && (
+            <p className="muted weather-note">
+              Days with a dashed outline are more than two weeks away, so they show what the
+              weather was on the same dates last year. Treat them as a rough guide; the real
+              forecast may be different.
+            </p>
+          )}
+        </>
+      )}
+    </section>
+  )
+}
+
+// Splits the forecast into rows (3 cards per row by default, with 4 and 8
+// as explicit even-split exceptions -- see chunkIntoRows), each row its own
+// grid columned to exactly how many cards it holds, so the cards in every
+// row -- including a shorter last row -- stretch to fill the width rather
+// than sitting at a fixed fraction with empty space beside them.
+function WeatherGrid({ days }) {
+  const rows = chunkIntoRows(days.length)
+  let cursor = 0
+
+  return (
+    <div className="weather-grid">
+      {rows.map((count, i) => {
+        const rowDays = days.slice(cursor, cursor + count)
+        cursor += count
+        return (
+          <div key={i} className="weather-row" style={{ gridTemplateColumns: `repeat(${count}, 1fr)` }}>
+            {rowDays.map((day) => {
               const { label, icon } = describeCode(day.code)
               const date = new Date(day.date + 'T00:00:00')
               return (
-                <li key={day.date} className={day.typical ? 'weather-day typical' : 'weather-day'}>
+                <div key={day.date} className={day.typical ? 'weather-card typical' : 'weather-card'}>
                   <span className="weather-weekday">
                     {date.toLocaleDateString('en-GB', { weekday: 'short' })}
                   </span>
@@ -85,21 +116,13 @@ export default function WeatherPanel({ trip, onWeather }) {
                     <span className="weather-temp-min"> {Math.round(day.min)}°</span>
                   </span>
                   <span className="weather-label">{label}</span>
-                </li>
+                </div>
               )
             })}
-          </ul>
-
-          {forecast.hasTypical && (
-            <p className="muted weather-note">
-              Days with a dashed outline are more than two weeks away, so they show what the
-              weather was on the same dates last year. Treat them as a rough guide; the real
-              forecast may be different.
-            </p>
-          )}
-        </>
-      )}
-    </section>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 

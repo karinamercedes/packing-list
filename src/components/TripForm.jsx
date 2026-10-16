@@ -19,7 +19,7 @@ export default function TripForm({ trip, onChange }) {
 
   return (
     <section>
-      <div className="grid">
+      <div className="grid trip-grid">
         <label>
           City
           <input name="city" value={trip.city} onChange={handleChange} placeholder="e.g. Lisbon" />

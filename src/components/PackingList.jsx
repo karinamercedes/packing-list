@@ -1,4 +1,12 @@
-export default function PackingList({ result, checked, onToggle }) {
+// Every quantity below starts out as the suggested amount the rules engine
+// calculated (item.qty), shown in the accent colour until it's changed --
+// qtyOverrides only ever holds the ids someone has actually touched.
+function qtyOptions(suggested) {
+  const max = Math.max(20, suggested + 10)
+  return Array.from({ length: max + 1 }, (_, i) => i)
+}
+
+export default function PackingList({ result, checked, onToggle, qtyOverrides, onSetQty }) {
   if (result.categories.length === 0) return null
 
   const total = result.categories.reduce((sum, c) => sum + c.items.length, 0)
@@ -21,6 +29,8 @@ export default function PackingList({ result, checked, onToggle }) {
           <ul className="packing-items">
             {cat.items.map((item) => {
               const id = `${cat.category}-${item.name}`
+              const qty = qtyOverrides[id] ?? item.qty
+              const atSuggested = qty === item.qty
               return (
                 <li key={id}>
                   <label className="check-row">
@@ -29,10 +39,26 @@ export default function PackingList({ result, checked, onToggle }) {
                       checked={Boolean(checked[id])}
                       onChange={() => onToggle(id)}
                     />
-                    <span className={checked[id] ? 'done' : ''}>
-                      {item.name}{item.qty > 1 ? ` x${item.qty}` : ''}
-                    </span>
+                    <span className={checked[id] ? 'done' : ''}>{item.name}</span>
                   </label>
+                  <div className="item-actions">
+                    <select
+                      className={`qty-select${atSuggested ? ' qty-suggested' : ''}`}
+                      aria-label={`Quantity for ${item.name}${atSuggested ? ` (suggested ${item.qty})` : ''}`}
+                      value={qty}
+                      onChange={(e) => onSetQty(id, Number(e.target.value))}
+                    >
+                      {qtyOptions(item.qty).map((n) => (
+                        <option
+                          key={n}
+                          value={n}
+                          style={{ color: n === item.qty ? 'var(--accent)' : 'var(--text)' }}
+                        >
+                          {n}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </li>
               )
             })}
