@@ -60,6 +60,14 @@ export default function App() {
         <WeatherPanel trip={trip} weather={weather} onWeather={setWeather} />
 
         <div className="reset-row">
+          <a
+            href="https://travel-planner-seven-ebon.vercel.app/"
+            target="_blank"
+            rel="noreferrer"
+            className="primary full-width"
+          >
+            Make your travel itinerary
+          </a>
           <button type="button" className="secondary full-width" onClick={resetTrip}>Reset</button>
         </div>
 
