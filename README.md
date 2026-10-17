@@ -2,8 +2,8 @@
 
 A free, no-signup packing list that scales to your trip. Set the number of days and what the trip is for (beach, hiking, business, a formal event, gym), and it builds a categorised checklist with quantities scaled to trip length. Optionally checks the real weather forecast for your dates and adds warnings and extra items (rain jacket, warm layers, sun hat).
 
-**Live demo:** _add your Vercel link here once deployed_
-**Repo:** _add your GitHub link here_
+**Live demo:** https://packing-list-seven-mu.vercel.app/
+**Repo:** https://github.com/karinamercedes/packing-list
 
 ## Why this exists
 
