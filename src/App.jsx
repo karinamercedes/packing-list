@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import useLocalStorage from './hooks/useLocalStorage'
+import useScrollToHash from './hooks/useScrollToHash'
 import Hero from './components/Hero'
 import FilmStrip from './components/FilmStrip'
 import TripForm from './components/TripForm'
@@ -12,6 +13,7 @@ import { buildPackingList } from './utils/rules'
 const defaultTrip = { city: '', numDays: 3, startDate: '', activities: [] }
 
 export default function App() {
+  useScrollToHash()
   const [trip, setTrip] = useLocalStorage('pl-trip', defaultTrip)
   const [weather, setWeather] = useLocalStorage('pl-weather', null)
   const [checked, setChecked] = useLocalStorage('pl-checked', {})
